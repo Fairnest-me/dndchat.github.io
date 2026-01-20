@@ -2,64 +2,254 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Telegram Чат</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моя первая страница на GitHub</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial; background: #1a1a2e; color: white; }
-        .chat-app { max-width: 800px; margin: 0 auto; padding: 20px; }
-        .header { text-align: center; margin-bottom: 30px; }
-        .message { background: #2d2b42; padding: 15px; margin: 10px 0; border-radius: 10px; }
-        .input-area { position: fixed; bottom: 0; left: 0; right: 0; padding: 15px; background: #1a1a2e; }
-        input, button { padding: 12px; margin: 5px; border-radius: 8px; border: none; }
-        input { width: 70%; background: #2d2b42; color: white; }
-        button { background: #4361ee; color: white; cursor: pointer; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .success-box {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #2ecc71;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .info-box {
+            background: rgba(52, 152, 219, 0.2);
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .step {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .step-number {
+            background: white;
+            color: #667eea;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .url-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            word-break: break-all;
+            margin: 10px 0;
+            border: 1px dashed rgba(255, 255, 255, 0.3);
+        }
+        
+        .button {
+            display: inline-block;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .button:active {
+            transform: translateY(0);
+        }
+        
+        .button-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .step {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="chat-app">
-        <div class="header">
-            <h1>💬 Telegram Чат</h1>
-            <p>Загрузите файлы через GitHub</p>
+    <div class="container">
+        <h1>🎉 Успех! GitHub Pages работает!</h1>
+        
+        <div class="success-box">
+            <h2>✅ Ваш сайт активен</h2>
+            <p>Вы успешно загрузили файлы на GitHub и активировали GitHub Pages.</p>
         </div>
         
-        <div id="messages">
-            <div class="message">👋 Добро пожаловать в чат!</div>
-            <div class="message">📁 Загрузите свои файлы стилей и скрипты</div>
+        <div class="info-box">
+            <h3>📍 Ваш URL адрес:</h3>
+            <div class="url-box" id="urlDisplay">
+                https://ваш-ник.github.io/ваш-репозиторий/
+            </div>
+            <button class="button" onclick="copyUrl()">📋 Копировать ссылку</button>
+            <button class="button button-secondary" onclick="openUrl()">🔗 Открыть сайт</button>
         </div>
         
-        <div class="input-area">
-            <input type="text" id="messageInput" placeholder="Сообщение...">
-            <button onclick="sendMessage()">Отправить</button>
+        <h3>📋 Что вы сделали:</h3>
+        
+        <div class="step">
+            <div class="step-number">1</div>
+            <div>
+                <strong>Создали репозиторий</strong> на GitHub
+                <p style="opacity: 0.8; margin-top: 5px;">Вы создали новое хранилище для ваших файлов.</p>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">2</div>
+            <div>
+                <strong>Загрузили файлы</strong> на GitHub
+                <p style="opacity: 0.8; margin-top: 5px;">Вы добавили HTML, CSS и другие файлы.</p>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">3</div>
+            <div>
+                <strong>Активировали GitHub Pages</strong>
+                <p style="opacity: 0.8; margin-top: 5px;">В настройках включили хостинг статических сайтов.</p>
+            </div>
+        </div>
+        
+        <h3>🔧 Что дальше?</h3>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <button class="button" onclick="location.reload()">🔄 Обновить страницу</button>
+            <button class="button button-secondary" onclick="viewSource()">👁️ Посмотреть код</button>
+            <button class="button button-secondary" onclick="testConsole()">⚙️ Тест консоли</button>
+        </div>
+        
+        <div class="footer">
+            <p>Страница создана: <span id="currentDate"></span></p>
+            <p>GitHub Pages | Статический хостинг</p>
         </div>
     </div>
 
     <script>
-        // Telegram WebApp
-        const tg = window.Telegram?.WebApp;
-        
-        if (tg) {
-            tg.ready();
-            tg.expand();
-            console.log('Telegram WebApp запущен');
-        }
-        
-        function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const text = input.value;
+        // Автоматически определяем URL
+        document.addEventListener('DOMContentLoaded', function() {
+            // Устанавливаем текущую дату
+            const now = new Date();
+            document.getElementById('currentDate').textContent = 
+                now.toLocaleDateString('ru-RU', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
             
-            if (text) {
-                const msgDiv = document.createElement('div');
-                msgDiv.className = 'message';
-                msgDiv.textContent = text;
-                document.getElementById('messages').appendChild(msgDiv);
-                input.value = '';
+            // Определяем URL если страница загружена через GitHub Pages
+            if (window.location.hostname.includes('github.io')) {
+                document.getElementById('urlDisplay').textContent = window.location.href;
             }
+        });
+        
+        function copyUrl() {
+            const url = document.getElementById('urlDisplay').textContent;
+            navigator.clipboard.writeText(url)
+                .then(() => {
+                    alert('✅ Ссылка скопирована в буфер обмена!');
+                })
+                .catch(err => {
+                    console.error('Ошибка копирования:', err);
+                });
         }
         
-        // Нажмите Enter для отправки
-        document.getElementById('messageInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') sendMessage();
+        function openUrl() {
+            const url = document.getElementById('urlDisplay').textContent;
+            window.open(url, '_blank');
+        }
+        
+        function viewSource() {
+            alert('Чтобы посмотреть исходный код:\n1. Нажмите F12\n2. Или правой кнопкой → "Просмотреть код"\n3. Или Ctrl+U');
+        }
+        
+        function testConsole() {
+            console.log('✅ Консоль JavaScript работает корректно!');
+            console.log('URL:', window.location.href);
+            console.log('User Agent:', navigator.userAgent);
+            console.log('Время загрузки:', new Date().toLocaleTimeString());
+            alert('✅ Тест выполнен! Откройте консоль разработчика (F12) чтобы увидеть результат.');
+        }
+        
+        // Простой тест кликов
+        document.querySelectorAll('.button').forEach(button => {
+            button.addEventListener('click', function() {
+                console.log('Клик по кнопке:', this.textContent);
+            });
         });
     </script>
 </body>
