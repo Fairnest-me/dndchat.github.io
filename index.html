@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Telegram Чат</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial; background: #1a1a2e; color: white; }
+        .chat-app { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .message { background: #2d2b42; padding: 15px; margin: 10px 0; border-radius: 10px; }
+        .input-area { position: fixed; bottom: 0; left: 0; right: 0; padding: 15px; background: #1a1a2e; }
+        input, button { padding: 12px; margin: 5px; border-radius: 8px; border: none; }
+        input { width: 70%; background: #2d2b42; color: white; }
+        button { background: #4361ee; color: white; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="chat-app">
+        <div class="header">
+            <h1>💬 Telegram Чат</h1>
+            <p>Загрузите файлы через GitHub</p>
+        </div>
+        
+        <div id="messages">
+            <div class="message">👋 Добро пожаловать в чат!</div>
+            <div class="message">📁 Загрузите свои файлы стилей и скрипты</div>
+        </div>
+        
+        <div class="input-area">
+            <input type="text" id="messageInput" placeholder="Сообщение...">
+            <button onclick="sendMessage()">Отправить</button>
+        </div>
+    </div>
+
+    <script>
+        // Telegram WebApp
+        const tg = window.Telegram?.WebApp;
+        
+        if (tg) {
+            tg.ready();
+            tg.expand();
+            console.log('Telegram WebApp запущен');
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const text = input.value;
+            
+            if (text) {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'message';
+                msgDiv.textContent = text;
+                document.getElementById('messages').appendChild(msgDiv);
+                input.value = '';
+            }
+        }
+        
+        // Нажмите Enter для отправки
+        document.getElementById('messageInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>
